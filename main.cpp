@@ -5,7 +5,7 @@
 #include <chrono>
 #include <clocale>
 
-// Функция для вычисления части вектора
+// Р¤СѓРЅРєС†РёСЏ РґР»СЏ РІС‹С‡РёСЃР»РµРЅРёСЏ С‡Р°СЃС‚Рё РІРµРєС‚РѕСЂР°
 void computePartialSum(const std::vector<int>& vec1, const std::vector<int>& vec2,
     std::vector<int>& result, size_t start, size_t end)
 {
@@ -15,7 +15,7 @@ void computePartialSum(const std::vector<int>& vec1, const std::vector<int>& vec
     }
 }
 
-// Функция для параллельного вычисления суммы векторов
+// Р¤СѓРЅРєС†РёСЏ РґР»СЏ РїР°СЂР°Р»Р»РµР»СЊРЅРѕРіРѕ РІС‹С‡РёСЃР»РµРЅРёСЏ СЃСѓРјРјС‹ РІРµРєС‚РѕСЂРѕРІ
 void parallelVectorSum(const std::vector<int>& vec1, const std::vector<int>& vec2,
     std::vector<int>& result, int num_threads)
 {
@@ -39,40 +39,40 @@ void parallelVectorSum(const std::vector<int>& vec1, const std::vector<int>& vec
 
 int main()
 {
-    // Устанавливаем русскую локаль
+    // РЈСЃС‚Р°РЅР°РІР»РёРІР°РµРј СЂСѓСЃСЃРєСѓСЋ Р»РѕРєР°Р»СЊ
     std::setlocale(LC_ALL, "Russian");
 
-    // Выводим количество аппаратных ядер
+    // Р’С‹РІРѕРґРёРј РєРѕР»РёС‡РµСЃС‚РІРѕ Р°РїРїР°СЂР°С‚РЅС‹С… СЏРґРµСЂ
     unsigned int cores = std::thread::hardware_concurrency();
-    std::cout << "Доступное количество аппаратных ядер: " << cores << std::endl;
+    std::cout << "Р”РѕСЃС‚СѓРїРЅРѕРµ РєРѕР»РёС‡РµСЃС‚РІРѕ Р°РїРїР°СЂР°С‚РЅС‹С… СЏРґРµСЂ: " << cores << std::endl;
 
-    // Размеры массивов для тестирования
+    // Р Р°Р·РјРµСЂС‹ РјР°СЃСЃРёРІРѕРІ РґР»СЏ С‚РµСЃС‚РёСЂРѕРІР°РЅРёСЏ
     std::vector<size_t> sizes = { 1000, 10000, 100000, 1000000 };
-    // Количество потоков для тестирования
+    // РљРѕР»РёС‡РµСЃС‚РІРѕ РїРѕС‚РѕРєРѕРІ РґР»СЏ С‚РµСЃС‚РёСЂРѕРІР°РЅРёСЏ
     std::vector<int> thread_counts = { 2, 4, 8, 16 };
 
-    // Создаем таблицу для результатов
+    // РЎРѕР·РґР°РµРј С‚Р°Р±Р»РёС†Сѓ РґР»СЏ СЂРµР·СѓР»СЊС‚Р°С‚РѕРІ
     std::vector<std::vector<double>> results(
         sizes.size(),
         std::vector<double>(thread_counts.size(), 0.0)
     );
 
-    // Проводим тестирование для каждого размера массива
+    // РџСЂРѕРІРѕРґРёРј С‚РµСЃС‚РёСЂРѕРІР°РЅРёРµ РґР»СЏ РєР°Р¶РґРѕРіРѕ СЂР°Р·РјРµСЂР° РјР°СЃСЃРёРІР°
     for (size_t s = 0; s < sizes.size(); ++s)
     {
         size_t size = sizes[s];
 
-        // Создаем векторы
-        std::vector<int> vec1(size, 1); // Заполняем единицами для простоты
-        std::vector<int> vec2(size, 2); // Заполняем двойками
+        // РЎРѕР·РґР°РµРј РІРµРєС‚РѕСЂС‹
+        std::vector<int> vec1(size, 1); // Р—Р°РїРѕР»РЅСЏРµРј РµРґРёРЅРёС†Р°РјРё РґР»СЏ РїСЂРѕСЃС‚РѕС‚С‹
+        std::vector<int> vec2(size, 2); // Р—Р°РїРѕР»РЅСЏРµРј РґРІРѕР№РєР°РјРё
         std::vector<int> result(size);
 
-        // Тестируем для каждого количества потоков
+        // РўРµСЃС‚РёСЂСѓРµРј РґР»СЏ РєР°Р¶РґРѕРіРѕ РєРѕР»РёС‡РµСЃС‚РІР° РїРѕС‚РѕРєРѕРІ
         for (size_t t = 0; t < thread_counts.size(); ++t)
         {
             int threads = thread_counts[t];
 
-            // Замеряем время выполнения
+            // Р—Р°РјРµСЂСЏРµРј РІСЂРµРјСЏ РІС‹РїРѕР»РЅРµРЅРёСЏ
             auto start = std::chrono::high_resolution_clock::now();
 
             parallelVectorSum(vec1, vec2, result, threads);
@@ -81,18 +81,18 @@ int main()
             std::chrono::duration<double> duration = end - start;
             results[s][t] = duration.count();
 
-            // Проверка корректности (для первого элемента)
+            // РџСЂРѕРІРµСЂРєР° РєРѕСЂСЂРµРєС‚РЅРѕСЃС‚Рё (РґР»СЏ РїРµСЂРІРѕРіРѕ СЌР»РµРјРµРЅС‚Р°)
             if (result[0] != 3)
             {
-                std::cerr << "Ошибка вычислений!" << std::endl;
+                std::cerr << "РћС€РёР±РєР° РІС‹С‡РёСЃР»РµРЅРёР№!" << std::endl;
                 return 1;
             }
         }
     }
 
-    // Выводим таблицу результатов
-    std::cout << "\nРезультаты тестирования (время в секундах):\n";
-    std::cout << "Размер массива\\Потоки\t";
+    // Р’С‹РІРѕРґРёРј С‚Р°Р±Р»РёС†Сѓ СЂРµР·СѓР»СЊС‚Р°С‚РѕРІ
+    std::cout << "\nР РµР·СѓР»СЊС‚Р°С‚С‹ С‚РµСЃС‚РёСЂРѕРІР°РЅРёСЏ (РІСЂРµРјСЏ РІ СЃРµРєСѓРЅРґР°С…):\n";
+    std::cout << "Р Р°Р·РјРµСЂ РјР°СЃСЃРёРІР°\\РџРѕС‚РѕРєРё\t";
 
     for (int threads : thread_counts)
     {
